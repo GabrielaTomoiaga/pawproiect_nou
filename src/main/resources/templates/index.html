@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Magazin Online Bijuterii</title>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+<div class="header">
+    <h1 class="dashboard-title">Magazin Online Bijuterii</h1>
+    <p class="description">Descoperă bijuterii unice și elegante pentru orice ocazie.</p>
+    <div class="nav">
+        <ul>
+            <li><a href="/bijuterii">Bijuterii</a></li>
+            <li><a href="/cos">Coșul meu</a></li>
+            <li><a href="#">Contul meu</a></li>
+            <li><a href="#">Logare</a></li>
+            <li>
+                <input type="text" class="search-box" placeholder="Caută bijuterii..." />
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="main-content">
+    <h2>Cele mai vândute bijuterii</h2>
+    <div class="featured-products">
+        <div class="product">
+            <img src="/images/img1.jpg" alt="Bijuterie 1" class="product-image">
+            <h3>Set de bijuterii </h3>
+            <p class="price">400 RON</p>
+            <button class="add-to-cart" data-product-id="1">Adaugă în coș</button>
+        </div>
+        <div class="product">
+            <img src="/images/img2.jpg" alt="Bijuterie 2" class="product-image">
+            <h3>Inel</h3>
+            <p class="price">150 RON</p>
+            <button class="add-to-cart" data-product-id="2">Adaugă în coș</button>
+        </div>
+    </div>
+
+    <script>
+        // Funcționalitate de căutare
+        document.querySelector('.search-box').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                const query = event.target.value;
+                if (query.trim() !== "") {
+                    window.location.href = "/cauta?query=" + encodeURIComponent(query);  // redirecționează la pagina de căutare
+                }
+            }
+        });
+
+        // Funcționalitate de adăugare în coș
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const productId = this.dataset.productId;
+                fetch('/cos/adauga', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ productId: productId })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert('Produsul a fost adăugat în coș!');
+
+                    })
+                    .catch(error => console.error('Eroare:', error));
+            });
+        });
+    </script>
+</div>
+
+</body>
+</html>

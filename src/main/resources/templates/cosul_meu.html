@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Coșul Meu</title>
+</head>
+<body>
+<h1>Coșul Meu</h1>
+<div th:if="${cart != null}">
+    <div th:each="product : ${cart}">
+        <p th:text="'Produs: ' + ${product.name}"></p>
+        <p th:text="'Preț: ' + ${product.price} + ' RON'"></p>
+        <img th:src="@{${product.imageUrl}}" alt="Imagine produs" style="width: 100px; height: auto;">
+    </div>
+</div>
+<div th:if="${cart == null or #lists.isEmpty(cart)}">
+    <p>Coșul este gol.</p>
+</div>
+</body>
+</html>
