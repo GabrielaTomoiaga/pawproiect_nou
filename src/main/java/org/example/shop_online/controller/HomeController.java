@@ -9,11 +9,11 @@ import org.springframework.web.servlet.view.RedirectView;
 public class HomeController {
 
     @GetMapping("/")
-    public RedirectView home(Authentication authentication) {
+    public String home(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated()) {
-            return new RedirectView("/index");
+            return "index";
         }
-        return new RedirectView("/login");
+        return "login";
     }
 
     @GetMapping("/index")
@@ -30,11 +30,5 @@ public class HomeController {
     public String cos() {
         return "cosul_meu";
     }
-
-    @GetMapping("/cont")
-    public String cont() {
-        return "cont";
-    }
 }
-
 

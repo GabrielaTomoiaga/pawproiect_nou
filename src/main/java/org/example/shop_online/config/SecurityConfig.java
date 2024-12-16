@@ -33,18 +33,18 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/register", "/login", "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/index", "/bijuterii", "/cosul_meu", "/cont").authenticated()
+                        .requestMatchers("/", "/index", "/register", "/login", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/bijuterii", "/cosul_meu", "/cont").authenticated()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .loginPage("/login")  // Pagina de login
                         .defaultSuccessUrl("/index", true)
                         .permitAll()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout") // Redirectionare catre login
+                        .logoutSuccessUrl("/login?logout")
                         .permitAll()
                 );
 

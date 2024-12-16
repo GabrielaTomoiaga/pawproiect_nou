@@ -107,7 +107,9 @@
         <h2 th:text="${produs.name}" class="product-name">Nume produs</h2>
         <p th:text="${produs.description}" class="product-description">Descriere produs</p>
         <p th:text="'Preț: ' + ${produs.price} + ' RON'" class="product-price">Preț</p>
-        <button class="add-to-cart" data-product-id="[[${produs.id}]]" onclick="addToCart([[${produs.id}]])">Adaugă în coș</button>
+        <form th:action="@{/add-to-cart/{productId}(productId=${produs.id})}" method="get">
+            <button type="submit" class="add-to-cart">Adaugă în coș</button>
+        </form>
     </div>
 </div>
 
@@ -118,16 +120,22 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function addToCart(productId) {
-        $.ajax({
-            url: "/add-to-cart/" + productId,
-            type: "POST",
-            success: function(response) {
-                alert("Produsul a fost adăugat în coș!");
+
+        fetch('/add-to-cart/' + productId, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
             },
-            error: function() {
-                alert("A apărut o problemă la adăugarea produsului în coș.");
-            }
-        });
+            body: JSON.stringify({ productId: productId })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Produsul a fost adăugat în coș!');
+                } else {
+                    alert('Eroare la adăugarea produsului în coș!');
+                }
+            });
     }
 </script>
 

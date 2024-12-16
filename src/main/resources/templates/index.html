@@ -13,10 +13,15 @@
         <ul>
             <li><a href="/bijuterii">Bijuterii</a></li>
             <li><a href="/cos">Coșul meu</a></li>
-            <li><a href="#">Contul meu</a></li>
-            <li><a href="#">Logare</a></li>
+            <li><a href="/cont">Contul meu</a></li>
+            <li><a href="/login">Logare</a></li>
             <li>
                 <input type="text" class="search-box" placeholder="Caută bijuterii..." />
+            </li>
+            <!-- Dacă utilizatorul este autentificat, afișează numele și un link de logout -->
+            <li th:if="${username}">
+                Bun venit, <span th:text="${username}"></span>!
+                <a href="/logout">Delogare</a>
             </li>
         </ul>
     </div>
@@ -38,39 +43,6 @@
             <button class="add-to-cart" data-product-id="2">Adaugă în coș</button>
         </div>
     </div>
-
-    <script>
-        // Funcționalitate de căutare
-        document.querySelector('.search-box').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                const query = event.target.value;
-                if (query.trim() !== "") {
-                    window.location.href = "/cauta?query=" + encodeURIComponent(query);  // redirecționează la pagina de căutare
-                }
-            }
-        });
-
-        // Funcționalitate de adăugare în coș
-        document.querySelectorAll('.add-to-cart').forEach(button => {
-            button.addEventListener('click', function() {
-                const productId = this.dataset.productId;
-                fetch('/cos/adauga', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ productId: productId })
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert('Produsul a fost adăugat în coș!');
-
-                    })
-                    .catch(error => console.error('Eroare:', error));
-            });
-        });
-    </script>
 </div>
-
 </body>
 </html>

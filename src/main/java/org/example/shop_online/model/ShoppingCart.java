@@ -1,20 +1,31 @@
+
 package org.example.shop_online.model;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ShoppingCart {
+    private List<CartItem> items = new ArrayList<>();
 
-    private List<Product> products = new ArrayList<>();  // Lista de produse din coș
+    public List<CartItem> getItems() {
+        return items;
+    }
 
     public void addProduct(Product product) {
-        products.add(product);  // Adaugă produsul în coș
+        for (CartItem item : items) {
+            if (item.getProduct().getId().equals(product.getId())) {
+                item.setQuantity(item.getQuantity() + 1);
+                return;
+            }
+        }
+        items.add(new CartItem(product, 1));  // Adăugăm produsul cu cantitatea 1
     }
 
-    public List<Product> getProducts() {
-        return products;  // Returnează lista de produse
+    public void removeProduct(Product product) {
+        items.removeIf(item -> item.getProduct().equals(product));
     }
 
-    public void clear() {
-        products.clear();  // Golește coșul
+    public double getTotalPrice() {
+        return items.stream().mapToDouble(item -> item.getTotalPrice()).sum();
     }
 }
+
