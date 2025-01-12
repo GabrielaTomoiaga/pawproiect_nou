@@ -1,29 +1,101 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Coșul meu</title>
+    <style>
+        /* Stiluri pentru cosul de cumparaturi */
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 10px;
+        }
+
+        .cart-item img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .cart-item p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .cart-item-price {
+            font-size: 16px;
+            color: #b12704;
+            font-weight: bold;
+            margin-right: 20px;
+        }
+
+        .cart-item-description {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .remove-button {
+            margin-left: 10px;
+        }
+
+        .total-price {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            text-align: right;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            color: #b12704;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
 <h2>Coșul meu</h2>
 
-<table>
-    <thead>
-    <tr>
-        <th>Produs</th>
-        <th>Cantitate</th>
-        <th>Preț total</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="cartItem : ${cartItems}">
-        <td th:text="${cartItem.product.name}"></td>
-        <td th:text="${cartItem.quantity}"></td>
-        <td th:text="${cartItem.totalPrice}"></td>
-    </tr>
-    </tbody>
-</table>
+<div class="cart-items">
+    <th:block th:each="product : ${cart}">
+        <div class="cart-item">
+            <img th:src="@{${product.imageUrl}}" alt="Imagine produs" />
+            <div class="cart-item-details">
+                <h3 th:text="${product.name}">Nume produs</h3>
+                <p th:text="'Preț: ' + ${product.price} + ' RON'">Preț produs</p>
+                <p th:text="${product.description}" class="cart-item-description">Descriere produs</p>
+            </div>
+            <div class="cart-item-price">
+                <p th:text="${product.price}">Preț</p>
+            </div>
+            <form action="/removeFromCart" method="get" class="remove-button">
+                <input type="hidden" name="productId" th:value="${product.id}">
+                <button type="submit">Șterge</button>
+            </form>
+        </div>
+    </th:block>
+</div>
 
-<a href="/index">Înapoi la produsele disponibile</a>
+<th:block th:if="${!#lists.isEmpty(cart)}">
+    <div class="total-price">
+        <p th:text="'Total coș: ' + ${total} + ' RON'">Total coș</p>
+    </div>
+</th:block>
+
+<a href="/bijuterii">Înapoi la produse</a>
 </body>
 </html>

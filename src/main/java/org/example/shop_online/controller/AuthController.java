@@ -15,18 +15,19 @@ public class AuthController {
     public AuthController(UserService userService) {
         this.userService = userService;
     }
-
+    // ruta pentru afisarea paginii de login
     @GetMapping("/login")
     public String login() {
         return "login";
     }
 
+    // ruta pentru afisarea paginii de inregistrare
     @GetMapping("/register")
     public String register(Model model) {
         model.addAttribute("user", new User());
         return "register";
     }
-
+    // ruta pentru procesarea datelor din formularul de inregistrare
     @PostMapping("/register")
     public String registerUser(@ModelAttribute User user) {
         userService.saveUser(user);

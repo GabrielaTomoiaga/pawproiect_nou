@@ -1,4 +1,4 @@
-/* Resetare stil */
+/* resetare stil */
 * {
     margin: 0;
     padding: 0;
@@ -11,7 +11,7 @@ body {
     color: #333;
 }
 
-/* Stiluri Header */
+/* stiluri Header */
 .header {
     background-color: #444;
     color: #fff;
@@ -58,20 +58,19 @@ body {
     background-color: #555;
 }
 
-/* Stiluri Căutare */
+/* stiluri cautare */
 .search-box {
     padding: 8px;
     border: none;
     border-radius: 4px;
 }
 
-/* Main Content */
+/* main content */
 .main-content {
     padding: 40px 20px;
     text-align: center;
 }
 
-/* Stiluri pentru Produse Recomandate */
 .featured-products {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -105,8 +104,8 @@ body {
     font-weight: bold;
 }
 
-/* Stiluri pentru Bijuterii */
-/* Stiluri pentru categorii */
+/* stiluri pentru bijuterii */
+/* stiluri pentru categorii */
 .jewelry-categories {
     display: flex;
     justify-content: center;
@@ -127,7 +126,7 @@ body {
     background-color: #555;
 }
 
-/* Lista produselor dintr-o categorie */
+/* lista produselor dintr-o categorie */
 .product-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr); /* 3 coloane */

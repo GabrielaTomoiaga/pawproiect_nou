@@ -10,25 +10,26 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-
+//configurare securitate pentru aplicatie
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private final UserService userService;
-    private final PasswordEncoder passwordEncoder;
+    private final UserService userService; // gestionarea utilizatorilor
+    private final PasswordEncoder passwordEncoder; // encoder pentru parole
 
     public SecurityConfig(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
 
+    //configurare AuthenticationManager pentru autentificare
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder auth = http.getSharedObject(AuthenticationManagerBuilder.class);
         auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
         return auth.build();
     }
-
+    //configurare rute de acces si autentificare
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http

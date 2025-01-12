@@ -5,17 +5,7 @@
     <title>Autentificare</title>
 </head>
 <body>
-<!-- Secțiunea care afișează linkul de logout dacă utilizatorul este deja autentificat -->
-<div>
-    <th:block sec:authorize="isAuthenticated()">
-        <a href="/logout">Logout</a>
-    </th:block>
 
-    <!-- Secțiunea care afișează linkul de login doar dacă utilizatorul nu este autentificat -->
-    <th:block sec:authorize="!isAuthenticated()">
-        <a href="/login">Login</a>
-    </th:block>
-</div>
 
 <h2>Autentificare</h2>
 <form th:action="@{/login}" method="post">

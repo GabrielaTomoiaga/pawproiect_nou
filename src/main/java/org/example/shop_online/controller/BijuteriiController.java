@@ -14,17 +14,20 @@ import java.util.List;
 public class BijuteriiController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductRepository productRepository; // injectarea repository-ului pentru acces la produse
 
+    // ruta pentru afisarea produselor
     @GetMapping("/bijuterii/{categorie}")
     public String getBijuteriiByCategorie(@PathVariable String categorie, Model model) {
-        // Obține produsele din baza de date pentru categoria specificată
+        // obtine produsele din baza de date pentru categoria specificata
         List<Product> produse = productRepository.findByCategory(categorie);
 
+        // verifica daca exista produse în categoria respectiva
         if (produse.isEmpty()) {
             model.addAttribute("error", "Nu sunt produse în această categorie!");
         }
 
+        // adauga produsele și categoria in model pentru afisare
         model.addAttribute("produse", produse);
         model.addAttribute("categorie", categorie);
         return "category";

@@ -87,6 +87,7 @@
             text-decoration: none;
             border-radius: 4px;
             transition: background-color 0.3s ease;
+            cursor: pointer;
         }
 
         .add-to-cart:hover {
@@ -107,9 +108,11 @@
         <h2 th:text="${produs.name}" class="product-name">Nume produs</h2>
         <p th:text="${produs.description}" class="product-description">Descriere produs</p>
         <p th:text="'Preț: ' + ${produs.price} + ' RON'" class="product-price">Preț</p>
-        <form th:action="@{/add-to-cart/{productId}(productId=${produs.id})}" method="get">
-            <button type="submit" class="add-to-cart">Adaugă în coș</button>
+        <form action="/addToCart" method="get">
+            <input type="hidden" name="productId" th:value="${produs.id}">
+            <button type="submit">Adaugă în coș</button>
         </form>
+
     </div>
 </div>
 
@@ -117,10 +120,8 @@
 
 <!-- Scriptul JavaScript -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     function addToCart(productId) {
-
         fetch('/add-to-cart/' + productId, {
             method: 'POST',
             headers: {
@@ -131,7 +132,10 @@
             .then(response => response.json())
             .then(data => {
                 if (data.success) {
-                    alert('Produsul a fost adăugat în coș!');
+                    document.getElementById("cart-message").style.display = "block"; // Afișează mesajul de succes
+                    setTimeout(() => {
+                        document.getElementById("cart-message").style.display = "none"; // Ascunde mesajul după 3 secunde
+                    }, 3000);
                 } else {
                     alert('Eroare la adăugarea produsului în coș!');
                 }
